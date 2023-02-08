@@ -10,14 +10,16 @@ export default function Home() {
   let loadingData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
   let { data, isError, isLoading, isSuccess } = useGetAllProductsQuery('')
-  console.log('from index', data?.products)
+  // console.log('from index', data)
 
 
   return (
     <>
-      {isError ? <ATMError /> : <div className='grid grid-cols-12 gap-10 m-5'>
+      {isError && <ATMError />}
+      
+      <div className='grid grid-cols-12 gap-10 m-5'>
         {
-          isSuccess ? (
+          !isLoading ? (
             data?.products.map((product: any) => {
               return (
                 <div className='col-span-3 cursor-pointer' key={product.id}>
@@ -34,7 +36,6 @@ export default function Home() {
           ) : loadingData.map((ele) => <div key={ele} className='col-span-3'> <ATMLoading /> </div>)
         }
       </div>
-      }
     </>
   )
 }

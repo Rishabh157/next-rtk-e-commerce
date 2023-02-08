@@ -19,8 +19,8 @@ interface ATMProductPropsType {
 const ATMSingleProduct = ({ ImageList, image, title, description, price, likes, onClickDelete }: ATMProductPropsType) => {
 
     const [mainImage, setMainImage] = useState(image)
-    const titleRef = useRef('')
-    const priceRef = useRef('')
+    const [titleProduct, setTitleProduct] = useState('');
+    const [priceProduct, setPriceProduct] = useState('');
 
     return (
         <div className='border-1 m-10 border-slate-500 drop-shadow-lg p-2 rounded-lg bg-gray-50'>
@@ -56,23 +56,25 @@ const ATMSingleProduct = ({ ImageList, image, title, description, price, likes, 
 
                         <label htmlFor='title' className='pr-10'>Title:</label>
                         <input
-                            ref={titleRef}
+                            value={titleProduct}
                             name='title'
+                            onChange={(e) => setTitleProduct(e.target.value)}
                             className='border-2 py-4 border-black outline-none rounded text-center text-lg' placeholder='enter new title' />
                     </div>
                     <div>
                         <label htmlFor='price' className='pr-10'>Price:</label>
                         <input
-                            ref={priceRef}
+                            value={priceProduct}
                             name="price"
+                            onChange={(e) => setPriceProduct(e.target.value)}
                             className='border-2 py-4 border-black outline-none rounded text-center text-lg' placeholder='enter new price' />
                     </div>
                     <div className='mt-10'>
                         <button
                             onClick={() => {
-                                console.log('from Ref values', titleRef?.current?.value, priceRef?.current?.value)
+                                console.log('from Ref values', priceProduct, titleProduct)
                             }}
-                            className='w-full px-10 py-2 bg-red-500 text-lg uppercase rounded text-white font-bold cursor-pointer hover:bg-red-700'>
+                            className='cursor-cell w-full px-10 py-2 bg-red-500 text-lg uppercase rounded text-white font-bold hover:bg-red-700'>
                             Update Product
                         </button>
                     </div>
