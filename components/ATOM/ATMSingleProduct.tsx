@@ -1,26 +1,32 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FiShare2 } from 'react-icons/fi';
 import { GoLocation } from 'react-icons/go';
 import { RiPlaystationLine } from 'react-icons/ri';
 import { BiDollar } from 'react-icons/bi';
+import { useGetSingleProductUpdateMutation } from '../../redux/services/productsApi';
+import { useRouter } from 'next/router';
 
 interface ATMProductPropsType {
+    id: string | number,
     ImageList: string[],
     image: string,
     title: string,
     description: string,
     price: number,
     likes: number,
-    onClickDelete(): void
+    onClickDelete(): void,
+    onClickUpdate(): void,
 }
 
-const ATMSingleProduct = ({ ImageList, image, title, description, price, likes, onClickDelete }: ATMProductPropsType) => {
+const ATMSingleProduct = ({ id, ImageList, image, title, description, price, likes, onClickDelete, onClickUpdate }: ATMProductPropsType) => {
 
+    const { query } = useRouter()
     const [mainImage, setMainImage] = useState(image)
     const [titleProduct, setTitleProduct] = useState('');
     const [priceProduct, setPriceProduct] = useState('');
+    const [updateProduct] = useGetSingleProductUpdateMutation('')
 
     return (
         <div className='border-1 m-10 border-slate-500 drop-shadow-lg p-2 rounded-lg bg-gray-50'>
@@ -35,7 +41,6 @@ const ATMSingleProduct = ({ ImageList, image, title, description, price, likes, 
                             src={`${url}`}
                             alt='cartimg'
                             onClick={() => setMainImage(url)}
-
                         >
                         </Image>
                     )
@@ -71,9 +76,7 @@ const ATMSingleProduct = ({ ImageList, image, title, description, price, likes, 
                     </div>
                     <div className='mt-10'>
                         <button
-                            onClick={() => {
-                                console.log('from Ref values', priceProduct, titleProduct)
-                            }}
+                            onClick={onClickUpdate}
                             className='cursor-cell w-full px-10 py-2 bg-red-500 text-lg uppercase rounded text-white font-bold hover:bg-red-700'>
                             Update Product
                         </button>

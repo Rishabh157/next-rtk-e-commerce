@@ -11,9 +11,19 @@ export const ProductsApi = createApi({
         }),
 
 
-        /******* GET ALL PRODUCTS DATA ********/
+        /******* GET SINGLE PRODUCT DATA ********/
         getSingleProduct: builder.query({
             query: (id) => `products/${id}`
+        }),
+
+
+        getSingleProductUpdate: builder.mutation({
+            query: ({ id, ...bodyData }) => ({
+                url: `products/${id}`,
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: bodyData
+            })
         }),
 
         /******* DELETE A SINGLE PRODUCT ********/
@@ -26,4 +36,4 @@ export const ProductsApi = createApi({
     }),
 })
 
-export const { useGetAllProductsQuery, useGetSingleProductQuery, useGetProductAndDeleteMutation } = ProductsApi;
+export const { useGetAllProductsQuery, useGetSingleProductQuery, useGetProductAndDeleteMutation, useGetSingleProductUpdateMutation } = ProductsApi;
